@@ -62,9 +62,6 @@
                 </div>
 
             -->
-            <div id="exam" class="collapse">
-                Click to expand elements within the collapse div
-            </div>
 
             <!-- <HINT> If user is authenticated, show course exam with a list of question -->
 
@@ -98,7 +95,7 @@
                     <input class="btn btn-success btn-block" type="submit" value="Submit">
             </form> -->
             {% if user.is_authenticated %}
-                <li>
+                <div>
                     <form id="questionform" action="point to a submit view" method="post">
                         {% for question in course.question_set.all %}
                         <div class="card mt-1">
@@ -120,7 +117,7 @@
                         {% endfor %}
                         
                     </form>
-                </li>
+                </div>
             {% else %}
                 <li>
                     <form class="form-inline" action="{% url 'onlinecourse:login' %}" method="post">
