@@ -97,8 +97,10 @@
             {% if user.is_authenticated %}
                 <div>
                     <form id="questionform" action="point to a submit view" method="post">
+                        <input class="btn btn-info btn-block " data-toggle="collapse" href="#collapseExam" type="button" value="Start">
+                        <div class="collapse" id="collapseExam">
                         {% for question in course.question_set.all %}
-                        <div class="card mt-1">
+                        <div class="card mt-1 ">
                             <div class="card-header"><h5>{{ question.question}}</h5></div>
                             {% csrf_token %}
                                 <div class="form-group">
@@ -113,9 +115,9 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <input class="btn btn-success btn-block" type="submit" value="Submit">
                         {% endfor %}
-                        
+                        <input class="btn btn-success btn-block" type="submit" value="Submit">
+                        </div>
                     </form>
                 </div>
             {% else %}
