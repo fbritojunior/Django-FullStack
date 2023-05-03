@@ -119,8 +119,7 @@ def submit(request, course_id):
     user = request.user
     extract_answers = extract_answers(request)
     Submission.objects.create(user=user, course=course, enrollment=enrollment, choices=choices, answer=extract_answers, mode='honor')
-    
-    
+
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(submission.id,)))
         
     
@@ -144,8 +143,10 @@ def extract_answers(request):
         # Calculate the total score
 def show_exam_result(request, course_id, submission_id):
     course = get_object_or_404(Course, pk=course_id)
-    submission = submission_id.user
-    choices = submission_id.choices
+    submission = submission_id
+    print('teste')
+    choices = request.choices
+    
     
 
 
