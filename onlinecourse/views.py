@@ -82,7 +82,7 @@ class CourseListView(generic.ListView):
                 course.is_enrolled = check_if_enrolled(user, course)
         return courses
 
-
+# CourseDetailView
 class CourseDetailView(generic.DetailView):
     model = Course
     template_name = 'onlinecourse/course_detail_bootstrap.html'
@@ -119,19 +119,14 @@ def submit(request, course_id):
 
     submission = Submission.objects.create(enrollment=enrollment)
 
-    submitted_answers = []
-    for key in request.POST:
-        if key.startswith('choice'):
-            value = request.POST[key]
-            choice_id = int(value)
-            submitted_answers.append(choice_id)
+    submitted_answers = extract_answers(request)
+    submission.choices.set(submitted_answers)
+    submission.save()
 
-    for choice_id in submitted_answers:
-        choice_obj = Choice.objects.get(pk=choice_id)
-        submission.choices.add(choice_obj)
-    submission.save()  
+    submission.choices.set(submitted_answers)
+    submission_id = submission.id
 
-    return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course_id, submission.id)))
+    return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course_id, submission_id)))
 
 
 def show_exam_result(request, course_id, submission_id):
